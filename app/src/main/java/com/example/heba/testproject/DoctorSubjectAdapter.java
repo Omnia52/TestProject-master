@@ -207,9 +207,6 @@ public class DoctorSubjectAdapter extends ArrayAdapter<SubjectData>{
     private void notifications(String text){
 
         NotificationManager notificationmgr = (NotificationManager) mCtx.getSystemService(NOTIFICATION_SERVICE);
-       /* Intent intent = new Intent(this, resultpage.class);
-        PendingIntent pintent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);       .setContentIntent(pintent)*/
-
         Notification notif = new Notification.Builder(getContext())
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Attantion!!")
@@ -218,6 +215,9 @@ public class DoctorSubjectAdapter extends ArrayAdapter<SubjectData>{
 
 
         notificationmgr.notify(0,notif);
+
+         /* Intent intent = new Intent(this, resultpage.class);
+        PendingIntent pintent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);       .setContentIntent(pintent)*/
 
 
     }
