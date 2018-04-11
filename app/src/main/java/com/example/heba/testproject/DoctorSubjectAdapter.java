@@ -1,7 +1,11 @@
 package com.example.heba.testproject;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -27,6 +31,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.security.auth.Subject;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 /**
  * Created by SM on 4/8/2018.
@@ -88,9 +94,11 @@ public class DoctorSubjectAdapter extends ArrayAdapter<SubjectData>{
                                     if(jsonObject.getString("message").equals("Success")){
                                         if(lactive1.getText().equals("DisActive Eval 1")){
                                             lactive1.setText("Active Eval 1");
+                                            notifications("Active Eval ");
                                         }
                                         else if (lactive1.getText().equals("Active Eval 1")){
                                             lactive1.setText("DisActive Eval 1");
+                                            notifications("DisActive Eval ");
                                         }
                                         progressDialog.dismiss();
 
@@ -138,9 +146,11 @@ public class DoctorSubjectAdapter extends ArrayAdapter<SubjectData>{
                                     if(jsonObject.getString("message").equals("Success")){
                                         if(lactive2.getText().equals("DisActive Eval 2")){
                                             lactive2.setText("Active Eval 2");
+                                            notifications("Active Eval 2");
                                         }
                                         else if (lactive2.getText().equals("Active Eval 2")){
                                             lactive2.setText("DisActive Eval 2");
+                                            notifications("DisActive Eval 2");
                                         }
                                         progressDialog.dismiss();
                                     }
@@ -192,6 +202,24 @@ public class DoctorSubjectAdapter extends ArrayAdapter<SubjectData>{
             if(mActive.equals("1"))
                 mBtn.setText("DisActive Eval 2");
         }
+    }
+
+    private void notifications(String text){
+
+        NotificationManager notificationmgr = (NotificationManager) mCtx.getSystemService(NOTIFICATION_SERVICE);
+       /* Intent intent = new Intent(this, resultpage.class);
+        PendingIntent pintent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);       .setContentIntent(pintent)*/
+
+        Notification notif = new Notification.Builder(getContext())
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle("Attantion!!")
+                .setContentText(text)
+                .build();
+
+
+        notificationmgr.notify(0,notif);
+
+
     }
 
 }
