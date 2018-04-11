@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/containerScroll"
+        android:layout_height="wrap_content"
+        tools:context="com.example.heba.testproject.StudentRegActivity">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/doctorEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Your Email"
+                android:layout_marginBottom="16dp"
+                android:inputType="textEmailAddress"
+                />
+
+            <EditText
+                android:id="@+id/doctorPassReg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Your Password"
+                android:layout_marginBottom="16dp"
+                android:inputType="textPassword"
+                />
+            <EditText
+                android:id="@+id/doctorPassRegConfirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirm Your Password"
+                android:layout_marginBottom="16dp"
+                android:inputType="textPassword"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Enter Your Email !\nand the Password matched the Confirm to active the Submit button !\nPassword length can't be less than 8 characters !"
+                />
+            <Button
+                android:layout_marginTop="16dp"
+                android:id="@+id/SubmitButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/clicked_btn"
+                android:text="Submit"
+                android:enabled="false"
+                />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

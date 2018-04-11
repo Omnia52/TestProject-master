@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/listViewMineDoc"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/textContainer"
+        android:layout_centerInParent="true"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:id="@+id/subjectCodeDoc"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:padding="16dp"
+            android:textColor="@android:color/black"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            tools:text="lutti"
+
+            />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/clicked_btn"
+                android:text="Active Eval 1"
+                android:id="@+id/active1"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                android:textColor="@android:color/black"
+                />
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/clicked_btn"
+                android:text="Active Eval 2"
+                android:id="@+id/active2"
+                android:layout_marginRight="8dp"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                android:layout_marginBottom="16dp"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="16dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

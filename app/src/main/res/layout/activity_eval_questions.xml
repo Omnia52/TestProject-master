@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/ChooseLayout"
+        >
+    <TextView
+        android:id="@+id/questionText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:padding="16dp"
+        android:text="السؤال يوضع هنا !"
+        />
+    </ScrollView>
+
+<LinearLayout
+    android:id="@+id/ChooseLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_alignParentBottom="true"
+    android:paddingBottom="16dp"
+    >
+    <RadioGroup
+        android:id="@+id/answerGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+  <RadioButton
+      android:id="@+id/Excellent"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="16dp"
+      android:paddingLeft="10dp"
+      android:text="موافق تمامًا"
+      />
+
+    <RadioButton
+        android:id="@+id/VeryGood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:paddingLeft="10dp"
+        android:text="موافق"
+        />
+
+    <RadioButton
+        android:id="@+id/Good"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:paddingLeft="10dp"
+        android:text="إلى حد ما"
+        />
+
+    <RadioButton
+        android:id="@+id/Weak"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:paddingLeft="10dp"
+        android:text="غير موافق"
+        />
+
+    <RadioButton
+        android:id="@+id/DontKnow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:paddingLeft="10dp"
+        android:text="غير موافق تمامًا"
+        />
+    </RadioGroup>
+    <ImageView
+        android:id="@+id/nextIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icons8arrow"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        />
+
+</LinearLayout>
+</RelativeLayout>

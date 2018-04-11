@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="16dp"
+    tools:context="com.example.heba.testproject.StudentLoginActivity">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:orientation="vertical">
+        >
+
+        <EditText
+            android:id="@+id/studentAcc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="Enter ID or Email"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/studentPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="Enter Password"
+            android:inputType="textPassword" />
+
+        <CheckBox
+
+            android:id="@+id/showPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Show Password" />
+
+        <Button
+            android:id="@+id/studentLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/clicked_btn"
+            android:drawSelectorOnTop="true"
+            android:layout_marginBottom="16dp"
+            android:text="Login"
+            android:enabled="false"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Please remember the password at least 8 characters"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/haventtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:text="First Time?!"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/Primary" />
+
+        <TextView
+            android:id="@+id/regbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/haventtext"
+            android:background="?android:attr/selectableItemBackground"
+            android:drawSelectorOnTop="true"
+            android:onClick="reg"
+            android:text="Create Account"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/Primary"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</RelativeLayout>
