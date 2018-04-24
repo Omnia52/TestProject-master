@@ -1,11 +1,7 @@
 package com.example.heba.testproject;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -32,15 +28,12 @@ import java.util.Map;
 
 import javax.security.auth.Subject;
 
-import static android.content.Context.NOTIFICATION_SERVICE;
-
 /**
  * Created by SM on 4/8/2018.
  */
 
 public class DoctorSubjectAdapter extends ArrayAdapter<SubjectData>{
 
-    //private Button active1,active2;
     private Context mCtx;
     private ProgressDialog progressDialog;
 
@@ -63,8 +56,6 @@ public class DoctorSubjectAdapter extends ArrayAdapter<SubjectData>{
 
         final SubjectData currentSubject = getItem(position);
         final TextView subjectView = (TextView) listItemView.findViewById(R.id.subjectCodeDoc);
-        //active1 = (Button)listItemView.findViewById(R.id.active1);
-        //active2 = (Button)listItemView.findViewById(R.id.active2);
         final Button lactive1,lactive2;
         lactive1=(Button)listItemView.findViewById(R.id.active1);
         lactive2=(Button)listItemView.findViewById(R.id.active2);
@@ -81,31 +72,28 @@ public class DoctorSubjectAdapter extends ArrayAdapter<SubjectData>{
         lactive1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //enableButton(currentSubject.getActiveEval1());
+                progressDialog.setMessage("Please Wait...");
+                progressDialog.show();
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.Active_Eval_URL,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                progressDialog.setMessage("Please Wait...");
-                                progressDialog.show();
                                 try {
                                     JSONArray jsonArray=new JSONArray(response);
                                     JSONObject jsonObject=jsonArray.getJSONObject(0);
                                     if(jsonObject.getString("message").equals("Success")){
                                         if(lactive1.getText().equals("DisActive Eval 1")){
                                             lactive1.setText("Active Eval 1");
-                                            notifications("Active Eval ");
                                         }
                                         else if (lactive1.getText().equals("Active Eval 1")){
                                             lactive1.setText("DisActive Eval 1");
-                                            notifications("DisActive Eval ");
                                         }
-                                        progressDialog.dismiss();
 
                                     }
                                     else{
                                         MyToast.viewToast("There is an Error!",mCtx);
                                     }
+                                    progressDialog.dismiss();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -113,6 +101,7 @@ public class DoctorSubjectAdapter extends ArrayAdapter<SubjectData>{
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
+                                progressDialog.dismiss();
                                 MyToast.viewToast("Error In Connection ! ",mCtx);
                             }
                 }){
@@ -133,30 +122,27 @@ public class DoctorSubjectAdapter extends ArrayAdapter<SubjectData>{
         lactive2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //enableButton(currentSubject.getActiveEval2());
+                progressDialog.setMessage("Please Wait...!");
+                progressDialog.show();
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.Active_Eval_URL,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                progressDialog.setMessage("Please Wait...!");
-                                progressDialog.show();
                                 try {
                                  JSONArray   jsonArray = new JSONArray(response);
                                  JSONObject jsonObject=jsonArray.getJSONObject(0);
                                     if(jsonObject.getString("message").equals("Success")){
                                         if(lactive2.getText().equals("DisActive Eval 2")){
                                             lactive2.setText("Active Eval 2");
-                                            notifications("Active Eval 2");
                                         }
                                         else if (lactive2.getText().equals("Active Eval 2")){
                                             lactive2.setText("DisActive Eval 2");
-                                            notifications("DisActive Eval 2");
                                         }
-                                        progressDialog.dismiss();
                                     }
                                     else{
                                         MyToast.viewToast("There is an Error!",mCtx);
                                     }
+                                    progressDialog.dismiss();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -164,6 +150,7 @@ public class DoctorSubjectAdapter extends ArrayAdapter<SubjectData>{
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
                         MyToast.viewToast("Error In Connection",mCtx);
 
                     }
@@ -182,16 +169,7 @@ public class DoctorSubjectAdapter extends ArrayAdapter<SubjectData>{
         });
         return listItemView;
     }
-    private void enableButton(String mActive) {
-        if(mActive.equals("1")){
-            Toast.makeText(getContext(),"Is Already Active",Toast.LENGTH_LONG).show();
-        }
-        else{
-            Toast.makeText(getContext(),"Active", Toast.LENGTH_LONG).show();
 
-
-        }
-    }
 
     private void setButtonText(String mActive,Button mBtn,int n){
         if(n==1){
@@ -202,25 +180,6 @@ public class DoctorSubjectAdapter extends ArrayAdapter<SubjectData>{
             if(mActive.equals("1"))
                 mBtn.setText("DisActive Eval 2");
         }
-    }
-
-    private void notifications(String text){
-
-        NotificationManager notificationmgr = (NotificationManager) mCtx.getSystemService(NOTIFICATION_SERVICE);
-        Intent intent = new Intent(getContext(),Subject_StudentActivity.class);
-        PendingIntent pintent = PendingIntent.getActivity(getContext(), (int) System.currentTimeMillis(), intent, 0);
-
-        Notification notif = new Notification.Builder(getContext())
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("Attantion!!")
-                .setContentText(text)
-                .setContentIntent(pintent)
-                .build();
-
-
-        notificationmgr.notify(0,notif);
-
-
     }
 
 }

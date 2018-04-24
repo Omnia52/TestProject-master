@@ -65,14 +65,14 @@ public class SubjectsAdapter extends ArrayAdapter<SubjectData> {
             @Override
             public void onClick(View view) {
                 flag = 0;
-                enableButton(currentSubject.getDoneEval1(), currentSubject.getActiveEval1());
+                clickButton(currentSubject.getSubjectCode());
             }
         });
         eval2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 flag = 1;
-                enableButton(currentSubject.getDoneEval2(), currentSubject.getActiveEval2());
+                clickButton(currentSubject.getSubjectCode());
             }
         });
         return listItemView;
@@ -80,83 +80,107 @@ public class SubjectsAdapter extends ArrayAdapter<SubjectData> {
 
 
 
-    private void enableButton(String mDoneEval,String mActiveEval){
+    private void clickButton(final String subjectCode){
+        progressDialog  = new ProgressDialog(mCtx);
+        builder = new AlertDialog.Builder(mCtx);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.show();
+        StringRequest stringRequest;
 
-        if(mDoneEval.equals("1")){
-            MyToast.viewToast("The Evaluation Solved",mCtx);
+        if(flag==0){
+            checkActived(Constants.IS_ACTIVE_EVAL1,subjectCode);
         }
         else{
-            if(mActiveEval.equals("1")){
-                questionArray =new ArrayList<>();
-                progressDialog  = new ProgressDialog(mCtx);
-                builder = new AlertDialog.Builder(mCtx);
-                progressDialog.setMessage("Please Wait...");
-                progressDialog.show();
-                StringRequest stringRequest;
-                if(flag==0) {
-                    stringRequest = new StringRequest(Request.Method.POST, Constants.Eval1_Questions_URL, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-                                JSONArray jsonArray = new JSONArray(response);
-                                for (int count = 0; count < jsonArray.length(); count++) {
-                                    JSONObject jsonObject = jsonArray.getJSONObject(count);
-                                    questionArray.add(jsonObject.getString("Question").toString());
-                                }
-                                displayAlert();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                        }
-                    });
-                }
-                else{
-                    stringRequest = new StringRequest(Request.Method.POST, Constants.Eval2_Questions_URL, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-                                JSONArray jsonArray = new JSONArray(response);
-                                for (int count = 0; count < jsonArray.length(); count++) {
-                                    JSONObject jsonObject = jsonArray.getJSONObject(count);
-                                    questionArray.add(jsonObject.getString("Question").toString());
-                                }
-                                displayAlert();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                        }
-                    });
-                }
-                MySingleton.getmInstance(mCtx).addToRequestQueue(stringRequest);
-
-            }
-
-            else{
-                MyToast.viewToast("The Evaluation is not Active Now",getContext());
-            }
+            checkActived(Constants.IS_ACTIVE_EVAL2,subjectCode);
         }
+
+    }
+
+    private void checkActived(String URL,final String subjectCode){
+
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray=new JSONArray(response);
+                    JSONObject jsonObject=jsonArray.getJSONObject(0);
+                    displayAlertActive(jsonObject.getString("message"),subjectCode);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    MyToast.viewToast("Error !",mCtx);
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                MyToast.viewToast("Error in connection !",mCtx);
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap <String , String> params=new HashMap<>();
+                params.put("Acc",SharedPrefManager.getmInstance(mCtx).getUserAcc());
+                params.put("CourseCode",subjectCode);
+                return params;
+            }
+        };
+        MySingleton.getmInstance(mCtx).addToRequestQueue(stringRequest);
+
     }
 
 
-    private void displayAlert(){
+    private void displayAlertActive(String message,String subjectCode){
         progressDialog.dismiss();
+        if(message.equals("Actived")){
+            questionArray =new ArrayList<>();
+            if(flag==0)
+                makeQuestionsList(Constants.Eval1_Questions_URL,"before",subjectCode);
+            else if(flag==1)
+                makeQuestionsList(Constants.Eval2_Questions_URL,"after",subjectCode);
+        }
+        else if(message.equals("Disactived")){
+            MyToast.viewToast("The Evaluation isn't active!",mCtx);
+        }
+        else if(message.equals("The Evaluation is Solved")||message.equals("Error!")){
+            MyToast.viewToast(message,mCtx);
+        }
+    }
+
+    private void makeQuestionsList(String URL,final String type, final String subjectCode){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int count = 0; count < jsonArray.length(); count++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(count);
+                        questionArray.add(jsonObject.getString("Question").toString());
+                    }
+                    displayAlert(type,subjectCode);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                MyToast.viewToast("Error in connection !",mCtx);
+
+            }
+        });
+        MySingleton.getmInstance(mCtx).addToRequestQueue(stringRequest);
+    }
+
+    private void displayAlert(String type,String subjectCode){
         if(questionArray.size()==0){
             builder.setTitle("Fetching data Error !");
             builder.setMessage("Error !");
             builder.setPositiveButton("Ok",null);
         }
         else{
-            SharedPrefManager.getmInstance(mCtx).setQuestions(questionArray);
+            SharedPrefManager.getmInstance(mCtx).setQuestions(questionArray,type,subjectCode);
             mCtx.startActivity(new Intent(mCtx,eval_questionsActivity.class));
         }
     }

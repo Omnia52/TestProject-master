@@ -90,4 +90,15 @@
         />
 
 </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/SubmitEvalButton"
+        android:text="Submit"
+        android:background="@drawable/clicked_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@id/ChooseLayout"
+        android:layout_margin="16dp"
+        android:visibility="invisible"
+        />
 </RelativeLayout>

@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -28,34 +30,38 @@
             android:label="Choosing" />
         <activity
             android:name=".StudentLoginActivity"
-            android:parentActivityName=".ChooseActivity"
             android:configChanges="keyboard|orientation|screenSize"
-            android:label="Student" />
+            android:label="Student"
+            android:parentActivityName=".ChooseActivity" />
         <activity
             android:name=".DocLoginActivity"
-            android:parentActivityName=".ChooseActivity"
             android:configChanges="keyboard|orientation|screenSize"
-            android:label="Doctor" />
+            android:label="Doctor"
+            android:parentActivityName=".ChooseActivity" />
         <activity
             android:name=".StudentRegActivity"
-            android:parentActivityName=".StudentLoginActivity"
             android:configChanges="keyboard|orientation|screenSize"
-            android:label="Reg" />
+            android:label="Reg"
+            android:parentActivityName=".StudentLoginActivity" />
         <activity
             android:name=".DocRegActivity"
-            android:parentActivityName=".DocLoginActivity"
-            android:configChanges="keyboard|orientation|screenSize" />
-        <activity
-            android:name=".Subject_DoctorActivity"
             android:configChanges="keyboard|orientation|screenSize"
-            android:label="Subjects" />
+            android:parentActivityName=".DocLoginActivity" />
         <activity
             android:name=".Subject_StudentActivity"
             android:configChanges="keyboard|orientation|screenSize"
             android:label="Subjects" />
-        <activity android:name=".eval_questionsActivity"
+        <activity
+            android:name=".eval_questionsActivity"
             android:configChanges="keyboard|orientation|screenSize"
-            android:parentActivityName=".Subject_StudentActivity"></activity>
+            android:parentActivityName=".Subject_StudentActivity" />
+        <activity android:name=".DoctorGraphActivity"
+            android:configChanges="keyboard|orientation|screenSize"/>
+        <activity
+            android:configChanges="keyboard|orientation|screenSize"
+            android:name=".DoctorActivity"
+            android:label="@string/title_activity_doctor"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

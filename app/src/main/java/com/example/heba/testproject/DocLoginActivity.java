@@ -8,8 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.android.volley.AuthFailureError;
@@ -32,6 +36,7 @@ public class DocLoginActivity extends AppCompatActivity {
     private EditText mDocAccE,mDocPassE;
     private Button mLoginBtn;
     private AlertDialog.Builder builder;
+    private CheckBox mShowPass;
     private ProgressDialog progressDialog;
     ArrayList<String> subjectList=new ArrayList<>();
 
@@ -44,6 +49,18 @@ public class DocLoginActivity extends AppCompatActivity {
         mDocPassE=(EditText) findViewById(R.id.doctorPass);
         mLoginBtn = (Button) findViewById(R.id.loginBtn);
         mDocAcc=mDocPass="" ;
+        mShowPass = (CheckBox)findViewById(R.id.showPass);
+        mShowPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(!isChecked){
+                    mDocPassE.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+                else{
+                    mDocPassE.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+            }
+        });
 
         mDocAccE.addTextChangedListener(new TextWatcher() {
             @Override
@@ -165,7 +182,7 @@ public class DocLoginActivity extends AppCompatActivity {
         progressDialog.dismiss();
         if(code.equals("Success")){
             SharedPrefManager.getmInstance(this).userLogin(mDocAcc,subjectList,mDocPass,"Doc");
-            startActivity(new Intent(DocLoginActivity.this,Subject_DoctorActivity.class));
+            startActivity(new Intent(DocLoginActivity.this,DoctorActivity.class));
             finish();
         }
         else if(message.equals("Wrong Password!")){

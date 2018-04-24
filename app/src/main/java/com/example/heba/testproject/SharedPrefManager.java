@@ -22,6 +22,10 @@ public class SharedPrefManager {
     private static final String USER_PASS="userPass";
     private static final String USER_SUBJECTS = "userSubjects";
     private static final String EVAL_QUESTIONS = "evalQuestions";
+    private static final String EVAL_TYPE = "evalType";
+    private static final String COURSE_CODE = "courseCode";
+    private static final String X_VALUES = "xValues";
+    private static final String Y_VALUES = "yValues";
     private static Context mCtx;
 
     private SharedPrefManager(Context context){
@@ -45,14 +49,30 @@ public class SharedPrefManager {
         return true;
     }
 
-    public boolean setQuestions(ArrayList<String> questionList){
+    public boolean setQuestions(ArrayList<String> questionList,String type,String courseCode){
         SharedPreferences sharedPreferences=mCtx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String questions=questionList.toString().substring(1,questionList.toString().length()-1);
         editor.putString(EVAL_QUESTIONS,questions);
+        editor.putString(EVAL_TYPE,type);
+        editor.putString(COURSE_CODE,courseCode);
         editor.apply();
         return true;
     }
+
+    public boolean setValues(ArrayList<String> xValues,ArrayList<String> yValues,String evalNo,String courseCode){
+        SharedPreferences sharedPreferences=mCtx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String y=yValues.toString().substring(1,yValues.toString().length()-1);
+        String x=xValues.toString().substring(1,xValues.toString().length()-1);
+        editor.putString(X_VALUES,x);
+        editor.putString(Y_VALUES,y);
+        editor.putString(COURSE_CODE,courseCode);
+        editor.putString(EVAL_TYPE,evalNo);
+        editor.apply();
+        return true;
+    }
+
 
     public boolean isLogged(){
         SharedPreferences sharedPreferences=mCtx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
@@ -98,5 +118,26 @@ public class SharedPrefManager {
         return sharedPreferences.getString(USER_TYPE,null);
     }
 
+    public String getEvalType(){
+        SharedPreferences sharedPreferences=mCtx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+        return sharedPreferences.getString(EVAL_TYPE,null);
+
+    }
+
+    public String getCourseCode(){
+        SharedPreferences sharedPreferences=mCtx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+        return sharedPreferences.getString(COURSE_CODE,null);
+
+    }
+    public String getxValues(){
+        SharedPreferences sharedPreferences=mCtx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+        return sharedPreferences.getString(X_VALUES,null);
+
+    }
+    public String getyValues(){
+        SharedPreferences sharedPreferences=mCtx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+        return sharedPreferences.getString(Y_VALUES,null);
+
+    }
 
 }

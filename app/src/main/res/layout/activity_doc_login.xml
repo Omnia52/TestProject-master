@@ -31,6 +31,14 @@
             android:layout_marginBottom="16dp"
             android:hint="Enter Password"
             android:inputType="textPassword" />
+        <CheckBox
+
+            android:id="@+id/showPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Show Password" />
+
 
         <Button
             android:id="@+id/loginBtn"
