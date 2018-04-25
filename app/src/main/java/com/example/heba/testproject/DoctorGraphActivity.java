@@ -378,7 +378,6 @@ public class DoctorGraphActivity extends AppCompatActivity {
         }
     }
 
-
     private int checkPermission(int permission){
         int status=PackageManager.PERMISSION_DENIED;
         switch (permission) {
@@ -386,7 +385,6 @@ public class DoctorGraphActivity extends AppCompatActivity {
                 status= ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE);
                 break;
         }
-
         return status;
     }
 
@@ -396,7 +394,6 @@ public class DoctorGraphActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_STORAGE);
                 break;
         }
-
     }
 
     private void showPermissionExplanation(final int permission){
